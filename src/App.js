@@ -13,6 +13,9 @@ import NewPost from "./pages/admin/screens/posts/NewPost";
 import ManagePost from "./pages/admin/screens/posts/ManagePost";
 import EditPost from "./pages/admin/screens/posts/EditPost";
 import Insights from "./pages/admin/screens/insights/insights";
+import ArticleScroll from "./pages/articleDetail/components/ArticleScroll";
+
+
 
 function App() {
     return (
@@ -23,11 +26,15 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/admin" element={<AdminLayout />}>
+                <Route path="/admin" element={<AdminLayout />} />
+                <Route path="/new-post" element={<NewPost />} />
+                <Route path="/feed" element={<ArticleScroll/>} ß>
+               
+                    
                     <Route index element={<Admin />} />
                     <Route path="insights" element={<Insights />} />
                     <Route path="comments" element={<Comments />} />
-                    <Route path="posts/new" element={<NewPost />} />
+                   
                     <Route path="posts/manage" element={<ManagePost />} />
                     <Route
                         path="posts/manage/edit/:slug"
