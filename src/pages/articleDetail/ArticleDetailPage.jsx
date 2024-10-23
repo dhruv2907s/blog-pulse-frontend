@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../../components/MainLayout";
-import BreadCrumbs from "../../components/BreadCrumbs";
 import { images, stables } from "../../constants";
 import { Link, useParams } from "react-router-dom";
 import SuggestedPosts from "./container/SuggestedPosts";
@@ -8,7 +7,6 @@ import CommentContainer from "../../components/comments/CommentsContainer";
 import SocialShareButtons from "../../components/SocialShareButtons";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAllPosts, getSinglePosts } from "../../services/index/posts";
-
 import ArticleDetailSkeleton from "./components/ArticleDetailSkeleton";
 import ErrorMessage from "../../components/ErrorMessage";
 import { useSelector } from "react-redux";
@@ -24,23 +22,17 @@ const ArticleDetailPage = () => {
     let likeStat = "empty";
     const { slug } = useParams();
     const userState = useSelector((state) => state.user);
-    const [breadCrumbsData, setBreadCrumbsData] = useState([]);
     const [likedPost, setLikedPost] = useState(false);
     const [typeComment, setTypeComment] = useState(false);
     const [login, setLogin] = useState(false);
     const [positive, setPositive] = useState(0);
     const [negative, setNegative] = useState(0);
+
     const { data, isLoading, isError } = useQuery({
         queryFn: () => getSinglePosts({ slug }),
         queryKey: ["blog", slug],
-        onSuccess: (data) => {
-            setBreadCrumbsData([
-                { name: "Home", link: "/" },
-                { name: "Blog", link: "/blog" },
-                { name: "Article Title", link: `/blog/${data.slug}` },
-            ]);
-        },
     });
+
     const { mutate: mutateLikes } = useMutation({
         mutationFn: ({ slug, token }) => {
             return likesCount({ slug, token });
@@ -50,14 +42,17 @@ const ArticleDetailPage = () => {
             console.log(error);
         },
     });
+
     let classname = "w-4 h-auto";
 
     const addLikes = () => {
         mutateLikes({ slug, token: userState?.userInfo?.token });
     };
+
     const addComment = () => {
         setTypeComment(!typeComment);
     };
+
     const likeChange = () => {
         if (likeStat === "empty") {
             likeStat = "fill";
@@ -67,21 +62,18 @@ const ArticleDetailPage = () => {
         setLikedPost(!likedPost);
         addLikes();
     };
+
     const { data: postsData } = useQuery({
         queryFn: () => getAllPosts(),
         queryKey: ["posts"],
     });
-    // client side rendering api 1 starts
+
     const analyzePost = (data) => {
         let string = "";
         return new Promise(async (resolve, reject) => {
             try {
                 for (let i = 0; i < data.body.content.length; i++) {
-                    for (
-                        let j = 0;
-                        j < data.body.content[i].content.length;
-                        j++
-                    ) {
+                    for (let j = 0; j < data.body.content[i].content.length; j++) {
                         string += data.body.content[i].content[j].text;
                     }
                 }
@@ -94,10 +86,8 @@ const ArticleDetailPage = () => {
                     },
                     headers: {
                         "content-type": "application/json",
-                        "X-RapidAPI-Key":
-                            "5b73e136cfmsh8bf75048987ecefp1a5b72jsn3fca4e2107f4",
-                        "X-RapidAPI-Host":
-                            "webit-text-analytics.p.rapidapi.com",
+                        "X-RapidAPI-Key": "5b73e136cfmsh8bf75048987ecefp1a5b72jsn3fca4e2107f4",
+                        "X-RapidAPI-Host": "webit-text-analytics.p.rapidapi.com",
                     },
                     data: {
                         key1: "value",
@@ -119,6 +109,7 @@ const ArticleDetailPage = () => {
             }
         });
     };
+
     const sentimentAnalyze = () => {
         analyzePost(data)
             .then((result) => {
@@ -129,19 +120,13 @@ const ArticleDetailPage = () => {
                 console.error(error);
             });
     };
-    // client side rendering api 1 ends
 
-    // client side rendering api 2 starts
     const soundPost = () => {
         let sound_string = "";
         return new Promise(async (resolve, reject) => {
             try {
                 for (let i = 0; i < data.body.content.length; i++) {
-                    for (
-                        let j = 0;
-                        j < data.body.content[i].content.length;
-                        j++
-                    ) {
+                    for (let j = 0; j < data.body.content[i].content.length; j++) {
                         sound_string += data.body.content[i].content[j].text;
                     }
                 }
@@ -153,8 +138,7 @@ const ArticleDetailPage = () => {
                         lang: "en-us",
                     },
                     headers: {
-                        "X-RapidAPI-Key":
-                            "5b73e136cfmsh8bf75048987ecefp1a5b72jsn3fca4e2107f4",
+                        "X-RapidAPI-Key": "5b73e136cfmsh8bf75048987ecefp1a5b72jsn3fca4e2107f4",
                         "X-RapidAPI-Host": "text-to-speech27.p.rapidapi.com",
                     },
                     responseType: "arraybuffer",
@@ -182,12 +166,6 @@ const ArticleDetailPage = () => {
                 console.error(error);
             });
     };
-    // client side rendering api 2 ends
-
-    // server side data render api 1 starts
-    // const{mutate: playSound} = useMutation({
-    //     mutationFn:
-    // })
 
     useEffect(() => {
         if (userState?.userInfo?.token) setLogin(true);
@@ -202,13 +180,20 @@ const ArticleDetailPage = () => {
             ) : (
                 <section className="container mx-auto max-w-5xl flex flex-col px-5 py-5 lg:flex-row lg:gap-x-5 lg:items-start">
                     <article className="flex-1">
-                        <BreadCrumbs data={breadCrumbsData} />
+                        <div className="flex gap-2 mb-4">
+                            <Link to="/" className="text-blue-500 hover:underline">
+                                Home
+                            </Link>
+                            <span>/</span>
+                            <Link to="/blog" className="text-blue-500 hover:underline">
+                                Blog
+                            </Link>
+                        </div>
                         <img
                             className="rounded-xl w-full"
                             src={
                                 data?.photo
-                                    ? stables.UPLOAD_FOLDER_BASE_URL +
-                                      data?.photo
+                                    ? stables.UPLOAD_FOLDER_BASE_URL + data?.photo
                                     : images.samplePostImage
                             }
                             alt={data?.title}
@@ -216,6 +201,7 @@ const ArticleDetailPage = () => {
                         <div className="mt-4 flex gap-2">
                             {data?.categories.map((category) => (
                                 <Link
+                                    key={category.name}
                                     to={`/blog?category=${category.name}`}
                                     className="text-primary text-sm font-roboto inline-block md:text-base"
                                 >
@@ -251,7 +237,6 @@ const ArticleDetailPage = () => {
                                             onClick={likeChange}
                                         />
                                     )}
-
                                     <div className="px-2 py-2">Like</div>
                                 </button>
                                 <button
@@ -312,5 +297,4 @@ const ArticleDetailPage = () => {
         </MainLayout>
     );
 };
-
 export default ArticleDetailPage;
