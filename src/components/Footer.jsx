@@ -1,140 +1,45 @@
 import React from "react";
 import { images } from "../constants";
-import { AiOutlineTwitter, AiFillHeart } from "react-icons/ai";
+import { AiOutlineTwitter, AiFillInstagram } from "react-icons/ai";
 import { FaFacebook } from "react-icons/fa";
-import { AiFillInstagram } from "react-icons/ai";
-import { BsTelegram, BsYoutube } from "react-icons/bs";
 
 const Footer = () => {
     return (
-        <section className="bg-dark-hard">
-            <footer className="container mx-auto grid grid-cols-10 px-5 py-10 gap-x-5 gap-y-10 md:pt-20 md:grid-cols-12 lg:grid-cols-10 lg:gap-x-10">
-                <div className="col-span-5 md:col-span-4 lg:col-span-2">
-                    <h3 className="text-dark-soft font-bold md:text-lg">
-                        Product
-                    </h3>
-                    <ul className="text-[#959EAD] text-sm mt-5 space-y-4 md:text-base">
-                        <li>
-                            <a href="/">Landing Page</a>
-                        </li>
-                        <li>
-                            <a href="/">Features</a>
-                        </li>
-                        <li>
-                            <a href="/">Documentation</a>
-                        </li>
-                        <li>
-                            <a href="/">Referral Program</a>
-                        </li>
-                        <li>
-                            <a href="/">Pricing</a>
-                        </li>
-                    </ul>
-                </div>
-                <div className="col-span-5 md:col-span-4 lg:col-span-2">
-                    <h3 className="text-dark-soft font-bold md:text-lg">
-                        Services
-                    </h3>
-                    <ul className="text-[#959EAD] text-sm mt-5 space-y-4 md:text-base">
-                        <li>
-                            <a href="/">Documentation</a>
-                        </li>
-                        <li>
-                            <a href="/">Design</a>
-                        </li>
-                        <li>
-                            <a href="/">Themes</a>
-                        </li>
-                        <li>
-                            <a href="/">Illustrations</a>
-                        </li>
-                        <li>
-                            <a href="/">UI Kit</a>
-                        </li>
-                    </ul>
-                </div>
-                <div className="col-span-5 md:col-span-4 lg:col-span-2 md:col-start-5 lg:col-start-auto">
-                    <h3 className="text-dark-soft font-bold md:text-lg">
-                        Company
-                    </h3>
-                    <ul className="text-[#959EAD] text-sm mt-5 space-y-4 md:text-base">
-                        <li>
-                            <a href="/">About</a>
-                        </li>
-                        <li>
-                            <a href="/">Terms</a>
-                        </li>
-                        <li>
-                            <a href="/">Privacy Policy</a>
-                        </li>
-                        <li>
-                            <a href="/">Careers</a>
-                        </li>
-                    </ul>
-                </div>
-                <div className="col-span-5 md:col-span-4 lg:col-span-2">
-                    <h3 className="text-dark-soft font-bold md:text-lg">
-                        More
-                    </h3>
-                    <ul className="text-[#959EAD] text-sm mt-5 space-y-4 md:text-base">
-                        <li>
-                            <a href="/">Documentation</a>
-                        </li>
-                        <li>
-                            <a href="/">License</a>
-                        </li>
-                        <li>
-                            <a href="/">Changelog</a>
-                        </li>
-                    </ul>
-                </div>
-                <div className="col-span-10 md:order-first md:col-span-4 lg:col-span-2">
-                    <img
-                        src={images.Logo}
-                        alt="logo"
-                        className="brightness-0 invert mx-auto md:mx-0"
-                    />
-                    <p className="text-sm text-dark-soft text-center mt-4 md:text-left md:text-base lg:text-sm">
-                        Build a modern and creative website with crealand.
-                    </p>
-                    <ul className="flex justify-center items-center mt-5 space-x-4 text-gray-300 md:justify-start">
-                        <li>
-                            <a href="/">
-                                <AiOutlineTwitter className="w-6 h-auto" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/">
-                                <BsYoutube className="w-6 h-auto" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/">
-                                <AiFillInstagram className="w-6 h-auto" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/">
-                                <FaFacebook className="w-6 h-auto" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/">
-                                <BsTelegram className="w-6 h-auto" />
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div className="hidden md:flex flex-col items-center space-y-4 md:col-span-12 lg:col-span-10">
-                    <div className="bg-primary text-white p-3 rounded-full">
-                        <AiFillHeart className="w-7 h-auto" />
+        <footer className="bg-gray-900 text-gray-300 py-16">
+            <div className="container mx-auto px-4">
+                <div className="flex flex-col md:flex-row justify-between items-center">
+                    <div className="mb-8 md:mb-0">
+                        <img
+                            src={images.Logo}
+                            alt="logo"
+                            className="brightness-0 invert h-8"
+                        />
+                        <p className="mt-3 text-sm text-gray-400">
+                            Build a modern and creative website
+                        </p>
                     </div>
-                    <p className="text-dark-soft font-bold italic pt-5">
-                        Copyright © 2023. Created for BharatIntern
-                    </p>
+                    <div className="flex flex-wrap justify-items-center space-x-4 md:space-x-12">
+                        <a href="/" className="hover:text-white transition-colors duration-300 py-2">About</a>
+                        <a href="/" className="hover:text-white transition-colors duration-300 py-2">Features</a>
+                        <a href="/" className="hover:text-white transition-colors duration-300 py-2">Pricing</a>
+                    </div>
+                    <div className="flex space-x-6 mt-8 md:mt-0">
+                        <a href="/" className="hover:text-white transition-colors duration-300">
+                            <AiOutlineTwitter className="w-6 h-6" />
+                        </a>
+                        <a href="/" className="hover:text-white transition-colors duration-300">
+                            <AiFillInstagram className="w-6 h-6" />
+                        </a>
+                        <a href="/" className="hover:text-white transition-colors duration-300">
+                            <FaFacebook className="w-6 h-6" />
+                        </a>
+                    </div>
                 </div>
-            </footer>
-        </section>
+                <div className="mt-16 pt-8 border-t border-gray-800 text-center text-sm text-gray-400">
+                    <p>© {new Date().getFullYear()} BlogPulse All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
     );
 };
 

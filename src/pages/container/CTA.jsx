@@ -3,72 +3,50 @@ import { images } from "../../constants";
 
 const CTA = () => {
     return (
-        <>
-            <svg
-                className="w-full h-auto max-h-40 translate-y-1"
-                preserveAspectRatio="none"
-                viewBox="0 0 2160 263"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    id="Wave"
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M2160 262.5H0V0C360 80 720 120 1080 120C1440 120 1800 80 2160 0V262.5Z"
-                    fill="#0D2436"
-                />
-            </svg>
-            <section className="relative bg-dark-hard px-5 ">
-                <div className="container grid grid-cols-12 mx-auto py-10 md:pb-20 lg:place-items-center">
-                    <div className="col-span-12 lg:col-span-6">
-                        <h2 className="text-white font-roboto font-bold text-2xl,d:text-4xl md:text-center md:leading-normal lg:text-left">
-                            Get our stories delivered from us to your inbox
-                            weekly.
+        <section className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 py-20 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div className="text-center lg:text-left">
+                        <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-6">
+                            Get our stories delivered from us to your inbox weekly.
                         </h2>
-                        <div className="w-full max-w-[494px] mt-12 space-y-3 mx-auto md:space-y-0 md:flex md:items-center md:space-x-2 lg:mx-0">
+                        <div className="mt-8 sm:flex sm:max-w-md lg:mt-0 lg:ml-0">
                             <input
-                                type="text"
+                                type="email"
                                 placeholder="Your Email"
-                                className="px-4 py-3 rounded-lg w-full placeholder:text-dark-light"
+                                className="w-full px-5 py-3 placeholder-gray-300 border border-transparent rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white"
                             />
-                            <button className="px-4 py-3 rounded-lg w-full bg-primary text-white font-bold md:w-fit md:whitespace-nowrap">
-                                Get Started
-                            </button>
+                            <div className="mt-3 sm:mt-0 sm:ml-3">
+                                <button className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-r-md text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white">
+                                    Get Started
+                                </button>
+                            </div>
                         </div>
-                        <p className="text-dark-soft text-sm leading-7 mt-6 md:text-center md:text-base lg:text-left">
-                            <span className="font-bold italic text-[#B3BAC5] md:not-italic md:font-normal md:text-dark-soft">
-                                Get a response tomorrow
-                            </span>{" "}
-                            if you submit by 9pm today. If we received after 9pm
-                            will get a reponse the following day.
+                        <p className="mt-6 text-sm text-indigo-100">
+                            Get a response tomorrow if you submit by 9pm today. If we receive after 9pm, you'll get a response the following day.
                         </p>
                     </div>
-                    <div className="col-span-12 hidden mb-[70px] md:block md:order-first lg:col-span-6 lg:order-last">
-                        <div className="w-3/4 mx-auto relative">
-                            <div className="w-1/2 h-1/2 bg-[#FC5A5A] rounded-lg absolute top-[10%] -right-[8%]" />
-                            <div className="w-1/2 h-1/2 bg-white rounded-lg opacity-[0.06] absolute -bottom-[10%] -left-[8%]" />
-                            <div className="w-full bg-white p-3 z-[1] relative rounded-xl">
+                    <div className="mt-10 lg:mt-0">
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-lg transform -rotate-6 scale-105 opacity-50"></div>
+                            <div className="relative bg-white rounded-lg shadow-xl overflow-hidden">
                                 <img
                                     src={images.CTA}
-                                    alt="title"
-                                    className="w-full object-cover object-center h-auto md:h-52 lg:h-48 xl:h-60"
+                                    alt="Future of Work"
+                                    className="w-full h-48 sm:h-56 object-cover"
                                 />
-                                <div className="p-5">
-                                    <h2 className="font-roboto font-bold text-xl text-dark-soft md:text-2xl lg:text-[28px]">
-                                        Future of Work
-                                    </h2>
-                                    <p className="text-dark-light mt-3 text-sm md:text-lg">
-                                        Majority of people will work in jobs
-                                        that don't exist today.
+                                <div className="p-6">
+                                    <h3 className="text-xl font-semibold text-gray-900">Future of Work</h3>
+                                    <p className="mt-2 text-gray-600">
+                                        Majority of people will work in jobs that don't exist today.
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </>
+            </div>
+        </section>
     );
 };
 

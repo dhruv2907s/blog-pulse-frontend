@@ -14,16 +14,13 @@ const RegisterPage = () => {
     const dispatch = useDispatch();
     const userState = useSelector((state) => state.user);
     const { mutate, isLoading } = useMutation({
-        mutationFn: ({ name, email, password }) => {
-            return signup({ name, email, password });
-        },
+        mutationFn: ({ name, email, password }) => signup({ name, email, password }),
         onSuccess: (data) => {
             dispatch(userActions.setUserInfo(data));
             localStorage.setItem("account", JSON.stringify(data));
         },
         onError: (error) => {
             toast.error(error.message);
-            console.log(error);
         },
     });
 
@@ -32,6 +29,7 @@ const RegisterPage = () => {
             navigate("/");
         }
     }, [navigate, userState.userInfo]);
+
     const {
         register,
         handleSubmit,
@@ -46,173 +44,99 @@ const RegisterPage = () => {
         },
         mode: "onChange",
     });
+
     const submitHandler = (data) => {
         const { name, email, password } = data;
         mutate({ name, email, password });
     };
+
     const password = watch("password");
 
     return (
         <MainLayout>
-            <section className="container mx-auto px-5 py-10">
-                <div className="w-full max-w-sm mx-auto">
-                    <h1 className="font-robot text-2xl text-center text-dark-hard mb-8">
-                        Sign Up
-                    </h1>
+            <section className="min-h-screen flex flex-col items-center justify-between bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-50">
+
+                <div className="max-w-lg w-full bg-white/70 backdrop-blur-lg rounded-3xl shadow-xl mt-20 p-8 md:p-10 transition-transform transform hover:scale-[1.02]">
+                    <h2 className="text-3xl font-extrabold text-gray-800 text-center mb-8">Join Us</h2>
                     <form onSubmit={handleSubmit(submitHandler)}>
-                        <div className="flex flex-col mb-6 w-full">
-                            <label
-                                htmlFor="name"
-                                className="text-[#5A7184] font-semibold block"
-                            >
-                                Name
-                            </label>
+                        <div className="mb-6">
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                             <input
                                 autoComplete="off"
                                 type="text"
                                 id="name"
-                                {...register("name", {
-                                    minLength: {
-                                        value: 1,
-                                        message:
-                                            "Name Length must be atleast 1 character",
-                                    },
-                                    required: {
-                                        value: true,
-                                        message: "Name is required",
-                                    },
-                                })}
-                                placeholder="Enter Name"
-                                className={`placeholder:text-[#959ead] text-dark-hard mt-3 rounded-lg px-5 py-4 font-semibold block outline-none border ${
-                                    errors.name
-                                        ? "border-red-500"
-                                        : "border-[#c3cad9]"
-                                }`}
+                                {...register("name", { required: "Name is required" })}
+                                placeholder="Enter your name"
+                                className="mt-1 block w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
-                            {errors.name?.message && (
-                                <p className="text-red-500 text-xs mt-1">
-                                    {errors.name?.message}
-                                </p>
-                            )}
+                            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                         </div>
-                        <div className="flex flex-col mb-6 w-full">
-                            <label
-                                htmlFor="email"
-                                className="text-[#5A7184] font-semibold block"
-                            >
-                                Email
-                            </label>
+                        <div className="mb-6">
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                             <input
                                 autoComplete="off"
                                 type="email"
                                 id="email"
                                 {...register("email", {
-                                    required: {
-                                        value: true,
-                                        message: "Email is required",
-                                    },
+                                    required: "Email is required",
                                     pattern: {
-                                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                                         message: "Please enter a valid email",
                                     },
                                 })}
-                                placeholder="Enter Email ID"
-                                className={`placeholder:text-[#959ead] text-dark-hard mt-3 rounded-lg px-5 py-4 font-semibold block outline-none border ${
-                                    errors.email
-                                        ? "border-red-500"
-                                        : "border-[#c3cad9]"
-                                }`}
+                                placeholder="Enter your email"
+                                className="mt-1 block w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
-                            {errors.email?.message && (
-                                <p className="text-red-500 text-xs mt-1">
-                                    {errors.email?.message}
-                                </p>
-                            )}
+                            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                         </div>
-                        <div className="flex flex-col mb-6 w-full">
-                            <label
-                                htmlFor="password"
-                                className="text-[#5A7184] font-semibold block"
-                            >
-                                Password
-                            </label>
+                        <div className="mb-6">
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
                             <input
                                 type="password"
                                 id="password"
                                 {...register("password", {
-                                    minLength: {
-                                        value: 6,
-                                        message:
-                                            "Password Length must be atleast 6 characters",
-                                    },
-                                    required: {
-                                        value: true,
-                                        message: "Password is required",
-                                    },
+                                    minLength: { value: 6, message: "Password must be at least 6 characters" },
+                                    required: "Password is required",
                                 })}
-                                placeholder="Enter Password"
-                                className={`placeholder:text-[#959ead] text-dark-hard mt-3 rounded-lg px-5 py-4 font-semibold block outline-none border ${
-                                    errors.password
-                                        ? "border-red-500"
-                                        : "border-[#c3cad9]"
-                                }`}
+                                placeholder="Enter your password"
+                                className="mt-1 block w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
-                            {errors.password?.message && (
-                                <p className="text-red-500 text-xs mt-1">
-                                    {errors.password?.message}
-                                </p>
-                            )}
+                            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
                         </div>
-                        <div className="flex flex-col mb-6 w-full">
-                            <label
-                                htmlFor="confirmPassword"
-                                className="text-[#5A7184] font-semibold block"
-                            >
-                                Confirm Password
-                            </label>
+                        <div className="mb-6">
+                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
                             <input
                                 type="password"
                                 id="confirmPassword"
                                 {...register("confirmPassword", {
-                                    required: {
-                                        value: true,
-                                        message: "Confirm Password is required",
-                                    },
-                                    validate: (value) => {
-                                        if (value !== password) {
-                                            return "Passwords do not match!!";
-                                        }
-                                    },
+                                    required: "Confirm Password is required",
+                                    validate: (value) => value === password || "Passwords do not match",
                                 })}
-                                placeholder="Enter confirm Password"
-                                className={`placeholder:text-[#959ead] text-dark-hard mt-3 rounded-lg px-5 py-4 font-semibold block outline-none border ${
-                                    errors.confirmPassword
-                                        ? "border-red-500"
-                                        : "border-[#c3cad9]"
-                                }`}
+                                placeholder="Confirm password"
+                                className="mt-1 block w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
-                            {errors.confirmPassword?.message && (
-                                <p className="text-red-500 text-xs mt-1">
-                                    {errors.confirmPassword?.message}
-                                </p>
+                            {errors.confirmPassword && (
+                                <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>
                             )}
                         </div>
                         <button
                             type="submit"
                             disabled={!isValid || isLoading}
-                            className="bg-primary text-white font-bold text-lg py-4 px-8 w-full rounded-lg mb-6 disabled:opacity-70 disabled:cursor-not-allowed"
+                            className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-4 mb-4 rounded-lg font-bold text-lg tracking-wide hover:scale-105 transition disabled:opacity-70 disabled:cursor-not-allowed"
                         >
-                            Register
+                            {isLoading ? "Registering..." : "Create Account"}
                         </button>
-                        <OAuth />
-                        <p className="text-sm font-semibold text-[#5a7184]">
-                            You have an account?
-                            <Link to="/login" className="text-primary">
-                                Login Now
-                            </Link>
-                        </p>
                     </form>
+                    <OAuth />
+                    <p className="text-sm text-center text-gray-500 mt-6">
+                        Already have an account?{" "}
+                        <Link to="/login" className="text-indigo-600 font-semibold">Log In</Link>
+                    </p>
                 </div>
+
+                <footer className="mt-10 py-6 text-center text-sm text-gray-500">
+                    &copy; 2024 BlogPulse. All rights reserved.
+                </footer>
             </section>
         </MainLayout>
     );
