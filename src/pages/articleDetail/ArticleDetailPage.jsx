@@ -42,11 +42,8 @@ const ArticleDetailPage = () => {
             console.log(error);
         },
     });
-<<<<<<< HEAD
 
     let classname = "w-4 h-auto";
-=======
->>>>>>> ac094a067b8a668f065fd1e594aa4cee7edb293e
 
     const addLikes = () => {
         mutateLikes({ slug, token: userState?.userInfo?.token });
@@ -181,28 +178,19 @@ const ArticleDetailPage = () => {
             ) : isError ? (
                 <ErrorMessage message="Couldn't fetch the post details." />
             ) : (
-                <section className="container mx-auto max-w-5xl flex flex-col px-5 py-10 lg:flex-row lg:gap-x-8 lg:items-start bg-gradient-to-r from-blue-50 to-blue-100 shadow-md rounded-lg">
+                <section className="container mx-auto max-w-5xl flex flex-col px-5 py-5 lg:flex-row lg:gap-x-5 lg:items-start">
                     <article className="flex-1">
-<<<<<<< HEAD
                         <div className="flex gap-2 mb-4">
                             <Link to="/" className="text-blue-500 hover:underline">
                                 Home
                             </Link>
                             <span>/</span>
                             <Link to="/blog" className="text-blue-500 hover:underline">
-=======
-                        <div className="flex gap-3 mb-8 text-sm">
-                            <Link to="/" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors duration-200">
-                                Home
-                            </Link>
-                            <span className="text-gray-400">/</span>
-                            <Link to="/blog" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors duration-200">
->>>>>>> ac094a067b8a668f065fd1e594aa4cee7edb293e
                                 Blog
                             </Link>
                         </div>
                         <img
-                            className="rounded-2xl w-full shadow-lg hover:shadow-xl transition-shadow duration-300"
+                            className="rounded-xl w-full"
                             src={
                                 data?.photo
                                     ? stables.UPLOAD_FOLDER_BASE_URL + data?.photo
@@ -210,98 +198,101 @@ const ArticleDetailPage = () => {
                             }
                             alt={data?.title}
                         />
-                        <div className="mt-8 flex gap-3">
+                        <div className="mt-4 flex gap-2">
                             {data?.categories.map((category) => (
                                 <Link
                                     key={category.name}
                                     to={`/blog?category=${category.name}`}
-                                    className="text-primary text-sm font-roboto inline-block md:text-base bg-blue-50 px-4 py-1 rounded-full hover:bg-blue-100 transition-colors duration-200"
+                                    className="text-primary text-sm font-roboto inline-block md:text-base"
                                 >
                                     {category.name}
                                 </Link>
                             ))}
                         </div>
-                        <h1 className="text-3xl font-bold font-roboto mt-6 mb-8 text-gray-900 md:text-4xl lg:text-5xl transition-all duration-300 hover:underline">
+                        <h1 className="text-xl font-medium font-roboto mt-4 text-dark-hard md:text-[26px]">
                             {data?.title}
                         </h1>
-                        <div className="w-full prose prose-lg max-w-none">
+                        <div className="w-full">
                             {!isLoading && !isError && (
                                 <Editor content={data?.body} editable={false} />
                             )}
                         </div>
                         {login && (
-                            <div className="flex flex-row justify-end gap-4 mt-8 mb-6">
+                            <div className="flex flex-row justify-end">
                                 <button
-                                    className="flex flex-row items-center hover:bg-gray-100 px-4 py-2 rounded-lg transition-colors duration-200"
+                                    className="flex flex-row"
                                     onClick={addLikes}
                                 >
                                     {likedPost ? (
                                         <AiFillHeart
                                             id="fill"
                                             color="RED"
-                                            className="w-5 h-5"
+                                            className={classname}
                                             onClick={likeChange}
                                         />
                                     ) : (
                                         <AiOutlineHeart
                                             id="empty"
-                                            className="w-5 h-5"
+                                            className={classname}
                                             onClick={likeChange}
                                         />
                                     )}
-<<<<<<< HEAD
                                     <div className="px-2 py-2">Like</div>
-=======
-                                    <span className="ml-2 font-medium">Like</span>
->>>>>>> ac094a067b8a668f065fd1e594aa4cee7edb293e
                                 </button>
                                 <button
-                                    className="flex flex-row items-center hover:bg-gray-100 px-4 py-2 rounded-lg transition-colors duration-200"
+                                    className="flex flex-row"
                                     onClick={addComment}
                                 >
-                                    <FiMessageSquare className="w-5 h-5" />
-                                    <span className="ml-2 font-medium">Comment</span>
-                                </button>
-                                <button
-                                    className="flex flex-row items-center hover:bg-gray-100 px-4 py-2 rounded-lg transition-colors duration-200"
-                                    onClick={playText}
-                                >
-                                    <HiSpeakerWave className="w-5 h-5" />
-                                    <span className="ml-2 font-medium">Listen</span>
+                                    <FiMessageSquare className="w-4 h-auto" />
+                                    <div className="px-2 py-2">Comment</div>
                                 </button>
                             </div>
                         )}
-                        <div className="mt-6">
-                            <p className="font-roboto font-medium text-lg text-gray-600">
-                                Sentiment Analysis:
-                            </p>
+                        {typeComment && (
+                            <CommentContainer
+                                comments={data?.comments}
+                                className="mt-10"
+                                logginedUserId={userState?.userInfo?._id}
+                                postSlug={slug}
+                            />
+                        )}
+                    </article>
+                    <div>
+                        <SuggestedPosts
+                            header="Latest Article"
+                            posts={postsData?.data}
+                            tags={data?.tags}
+                            className="mt-8 lg:mt-0 lg:max-w-xs"
+                        />
+                        <div className="mt-7">
+                            <h2 className="font-roboto font-medium text-dark-hard mb-4 md:text-xl">
+                                Share on
+                            </h2>
+                            <SocialShareButtons
+                                url={encodeURI(window.location.href)}
+                                title={encodeURIComponent(data?.title)}
+                            />
+                        </div>
+                        <div>
                             <button
-                                className="inline-block text-lg font-medium mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors duration-200"
+                                className="mt-5 ml-8 border-2 border-blue-500 px-6 py-2 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300"
                                 onClick={sentimentAnalyze}
                             >
-                                Check Sentiment
+                                Analyze the Sentiment
                             </button>
-                            <p className="mt-4 text-lg">
-                                Positive: {positive}% | Negative: {negative}%
-                            </p>
+                            <button className="ml-3 mt-2" onClick={playText}>
+                                <HiSpeakerWave size="40px" color="blue" />
+                            </button>
                         </div>
-                        <div className="mt-12">
-                            <SocialShareButtons title={data?.title} />
-                        </div>
-                    </article>
-                    <div className="lg:w-[30%] w-full mt-12 lg:mt-0">
-                        <SuggestedPosts
-                            isLoading={isLoading}
-                            isError={isError}
-                            posts={postsData}
-                        />
+                        {
+                            <div className="py-5">
+                                Positive: {positive} %
+                                <br />
+                                Negative: {negative} %
+                            </div>
+                        }
                     </div>
                 </section>
-            )}
-            {typeComment && (
-                <div className="mt-6 container mx-auto max-w-5xl">
-                    <CommentContainer />
-                </div>
             )}
         </MainLayout>
     );
