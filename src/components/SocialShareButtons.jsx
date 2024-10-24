@@ -8,13 +8,7 @@ import {
 const SocialShareButtons = ({ url, title }) => {
     return (
         <div className="w-full flex justify-between">
-            <a
-                href={`https://www.facebook.com/dialog/share?app_id=${process.env.REACT_APP_FACEBOOK_APP_ID}&display=popup&href=${url}`}
-                target="_blank"
-                rel="noreferrer"
-            >
-                <FaFacebookSquare className="text-[#3B5998] w-12 h-auto" />
-            </a>
+           
             <a
                 href={`https://twitter.com/intent/tweet/?url=${url}`}
                 target="_blank"

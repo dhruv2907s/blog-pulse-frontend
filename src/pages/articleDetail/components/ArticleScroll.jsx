@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from "@tanstack/react-query";
+import { stables } from "../../../constants";
 import { toast } from "react-hot-toast";
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaSearch, FaUserCircle, FaChevronDown } from 'react-icons/fa';
-import { useSelector} from "react-redux";
+import { HiOutlineCamera } from 'react-icons/hi';
+import { useSelector } from "react-redux";
 import { images } from "../../../constants";
 import ArticleCard from "/Users/shahd/OneDrive/Desktop/BlogPulse/front-end/src/components/ArticleCard";
 import ArticleCardSkeleton from "/Users/shahd/OneDrive/Desktop/BlogPulse/front-end/src/components/ArticleCardSkeleton";
 import ErrorMessage from "/Users/shahd/OneDrive/Desktop/BlogPulse/front-end/src/components/ErrorMessage";
 import { getAllPosts } from "/Users/shahd/OneDrive/Desktop/BlogPulse/front-end/src/services/index/posts";
+
 
 const Header = () => {
   const location = useLocation();
@@ -42,7 +45,7 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center">
-          <img className="h-10" src={images.Logo} alt="logo" />
+            <img className="h-10" src={images.blog_pulse_logo_black} alt="logo" />
           </Link>
           <nav className="hidden md:flex items-center space-x-8">
             <Link
@@ -63,21 +66,22 @@ const Header = () => {
                 className="flex items-center space-x-2 text-primary-foreground hover:text-primary focus:outline-none"
               >
                 {user.avatar ? (
-                  <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full" />
+                  <img 
+                    src={stables.UPLOAD_FOLDER_BASE_URL + user.avatar}
+                    alt="profile"
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
                 ) : (
-                  <FaUserCircle className="w-8 h-8" />
+                  <div className="w-8 h-8 rounded-full bg-blue-50/50 flex justify-center items-center">
+                    <HiOutlineCamera className="w-4 h-auto text-primary" />
+                  </div>
                 )}
                 <span>{user.name}</span>
                 <FaChevronDown className={`transform ${isDropdownOpen ? 'rotate-180' : ''} transition-transform`} />
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-background rounded-md shadow-lg py-1 z-10">
-                  <Link
-                    to="/settings"
-                    className="block px-4 py-2 text-sm text-primary-foreground hover:bg-primary hover:text-primary-foreground"
-                  >
-                    Settings
-                  </Link>
+                  
                   <Link
                     to="/new-post"
                     className="block px-4 py-2 text-sm text-primary-foreground hover:bg-primary hover:text-primary-foreground"
@@ -127,13 +131,15 @@ const ArticleScroll = () => {
     const titleLower = post.title?.toLowerCase() || '';
     const excerptLower = post.excerpt?.toLowerCase() || '';
     const contentLower = post.content?.toLowerCase() || '';
-    const authorNameLower = post.user?.name?.toLowerCase() || ''; // Add author name search
+    const authorNameLower = post.user?.name?.toLowerCase() || '';
+    const tagsLower = post.tags?.map(tag => tag.toLowerCase()) || []; // Convert tags to lowercase array
     
     return searchTerms.every(term => 
       titleLower.includes(term) || 
       excerptLower.includes(term) || 
       contentLower.includes(term) ||
-      authorNameLower.includes(term)  // Include author name in search
+      authorNameLower.includes(term) ||
+      tagsLower.some(tag => tag.includes(term)) // Check if any tag matches the search term
     );
 }) || [];
 
@@ -148,7 +154,7 @@ const ArticleScroll = () => {
           <div className="mb-8 relative">
           <input
             type="text"
-            placeholder="Search by title, content, author, or keywords..."
+            placeholder="Search by title, content, author, tags, or keywords..."
             className="w-full p-4 pr-12 rounded-full border-2 border-primary/30 focus:border-primary focus:outline-none bg-background text-primary-foreground"
             value={searchTerm}
             onChange={handleSearchChange}
