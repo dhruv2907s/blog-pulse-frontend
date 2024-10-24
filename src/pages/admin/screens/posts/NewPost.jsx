@@ -5,18 +5,24 @@ import { createPost } from "../../../../services/index/posts";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import Editor from "../../../../components/editor/Editor";
-// import { load } from "../../../../../public/backup";
-// import PostTags from "./PostTags";
 
 const NewPost = () => {
-    const labelClassName = "text-black font-semibold block text-xl";
+    const labelClassName = "text-gray-800 font-semibold block text-xl mb-2";
     const inputClassName =
-        "placeholder:text-[#959EAD] w-full text-dark-hard my-5 rounded-lg px-3 py-2 font-semibold block outline-none border";
+        "placeholder:text-gray-400 w-full text-gray-800 my-3 rounded-lg px-4 py-3 font-semibold block outline-none border border-gray-300 shadow-sm transition duration-200 focus:border-blue-500 focus:ring focus:ring-blue-200";
+    const buttonClassName =
+        "w-full py-3 font-semibold rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md";
+    const submitButtonClassName = "bg-gradient-to-r from-green-400 to-green-600 text-white mx-2 hover:shadow-lg";
+    const discardButtonClassName = "bg-gradient-to-r from-red-400 to-red-600 text-white mx-2 hover:shadow-lg";
+    const editorContainerClassName = "mx-10 my-7 flex flex-col justify-center border border-gray-300 rounded-xl shadow-lg p-4 bg-white";
+    const imageContainerClassName = "mx-10 pt-7 relative cursor-pointer overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:scale-105";
+    const imagePreviewClassName = "rounded-lg w-full object-cover h-[200px]";
+
     const [photo, setPhoto] = useState(null);
     const [title, setTitle] = useState("");
     const [caption, setCaption] = useState("");
     const [body, setBody] = useState(null);
-    // const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState([]);
     const userState = useSelector((state) => state.user);
 
     const { mutate } = useMutation({
@@ -26,8 +32,14 @@ const NewPost = () => {
                 token,
             });
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             toast.success("Post created");
+            // Reset form after successful submission
+            setPhoto(null);
+            setTitle("");
+            setCaption("");
+            setBody("");
+            setTags([]);
         },
         onError: (error) => {
             toast.error(error.message);
@@ -55,6 +67,7 @@ const NewPost = () => {
             title,
             caption,
             body,
+            tags
         };
 
         let updatedData = new FormData();
@@ -63,22 +76,24 @@ const NewPost = () => {
         updatedData.append("document", JSON.stringify(postData));
 
         mutate({ postData: updatedData, token: userState.userInfo.token });
+    };
 
+    const handleDiscard = () => {
         setPhoto(null);
         setTitle("");
         setCaption("");
         setBody("");
+        setTags([]);
     };
 
     return (
-        <form className="container pb-7" onSubmit={submitHandler}>
+        <form className="container pb-7 bg-gray-100 rounded-lg shadow-lg p-6" onSubmit={submitHandler}>
             {/* heading */}
-            <h1 className="text-2xl font-semibold mb-10">New Post</h1>
+            <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Create a New Post</h1>
+            
             {/* title and caption */}
-            <div className="mx-10 mb-7">
-                <label htmlFor="title" className={labelClassName}>
-                    Title
-                </label>
+            <div className="mx-auto mb-7 max-w-md">
+                <label htmlFor="title" className={labelClassName}>Title</label>
                 <input
                     type="text"
                     id="title"
@@ -86,47 +101,43 @@ const NewPost = () => {
                     value={title}
                     autoComplete="off"
                     onChange={titleChangeHandler}
-                    placeholder="Title goes here.."
+                    placeholder="Enter title here..."
                 />
-                <label htmlFor="caption" className={labelClassName}>
-                    Caption
-                </label>
+                <label htmlFor="caption" className={labelClassName}>Caption</label>
                 <input
                     type="text"
                     id="caption"
                     autoComplete="off"
-                    placeholder="Caption goes here.."
+                    placeholder="Enter caption here..."
                     value={caption}
                     onChange={captionChangeHandler}
                     className={inputClassName}
                 />
             </div>
+
             {/* editor */}
-            <label className="text-black font-semibold ml-10 text-xl">
-                Body
-            </label>
-            <div className="mx-10 my-7 flex flex-col justify-center border-2 border-primary rounded-xl">
+            <label className="text-gray-800 font-semibold ml-auto text-xl">Body</label>
+            <div className={editorContainerClassName}>
                 <Editor
                     editable={true}
                     content={(prevBody) => prevBody}
                     onDataChange={(data) => setBody(data)}
                 />
             </div>
+
             {/* post image */}
-            <label className="text-black font-semibold text-xl ml-10">
-                Image
-            </label>
-            <div className="mx-10 pt-7">
-                <label htmlFor="postPicture" className="w-full cursor-pointer">
+            <label className="text-gray-800 font-semibold text-xl ml-auto">Image</label>
+            <div className={imageContainerClassName}>
+                <label htmlFor="postPicture" className="w-full">
                     {photo ? (
                         <img
                             src={URL.createObjectURL(photo)}
-                            alt="post   "
-                            className="rounded-xl w-full"
+                            alt="post"
+                            className={imagePreviewClassName}
                         />
                     ) : (
-                        <div className="w-[50px] h-[50px] bg-blue-50/50 flex justify-center items-center">
-                            <HiOutlineCamera className="w-7 h-auto text-primary" />
+                        <div className="w-full h-[200px] flex justify-center items-center bg-blue-50 rounded-lg">
+                            <HiOutlineCamera className="w-12 h-auto text-blue-500" />
                         </div>
                     )}
                 </label>
@@ -137,27 +148,23 @@ const NewPost = () => {
                     onChange={handleFileChange}
                 />
             </div>
+
             {/* tags */}
-            {/* <label className="text-black font-semibold text-xl ml-10">
-                Tags
-            </label>
-            <PostTags onTagsHandler={(tags) => setTags(tags)} /> */}
+            
+
             {/* submit button */}
-            <div className="mx-10 pt-7 flex flex-row justify-between">
+            <div className="mx-auto pt-7 flex flex-row justify-between max-w-md">
                 <button
-                    className="bg-green-500 text-white w-1/2 mx-5 font-semibold rounded-lg px-4 py-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className={`${buttonClassName} ${submitButtonClassName}`}
                     type="submit"
                 >
                     Post
                 </button>
-                {/* <button
-                    className="bg-green-500 text-white w-1/3 mx-5 font-semibold rounded-lg px-4 py-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                <button 
                     type="button"
-                    onClick={load}
+                    className={`${buttonClassName} ${discardButtonClassName}`}
+                    onClick={handleDiscard}
                 >
-                    Backup
-                </button> */}
-                <button className="bg-red-500 text-white w-1/2 mx-5 font-semibold rounded-lg px-4 py-2 disabled:opacity-70 disabled:cursor-not-allowed">
                     Discard
                 </button>
             </div>

@@ -108,7 +108,7 @@ export const soundPost = async (data) => {
         const config = {
             headers: {
                 "X-RapidAPI-Key":
-                    "5b73e136cfmsh8bf75048987ecefp1a5b72jsn3fca4e2107f4",
+                    "5b73e136cfmsh8bf75048987ecefp1a5b72jsn3fca4e2f107f4",
                 "X-RapidAPI-Host": "text-to-speech27.p.rapidapi.com",
             },
         };

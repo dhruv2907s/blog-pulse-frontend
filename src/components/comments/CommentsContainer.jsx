@@ -32,7 +32,7 @@ const CommentContainer = ({
             },
             onSuccess: () => {
                 toast.success(
-                    "Your comment is sent successfully, it will be visible after confirmation from the Admin."
+                    "Your comment is sent successfully."
                 );
             },
             onError: (error) => {

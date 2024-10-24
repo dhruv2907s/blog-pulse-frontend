@@ -1,5 +1,5 @@
 import React from "react";
-import { TfiGoogle } from "react-icons/tfi";
+import { AiOutlineGoogle } from "react-icons/ai";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase.js";
 import { useDispatch } from "react-redux";
@@ -35,14 +35,17 @@ const OAuth = () => {
         }
     };
     return (
-        <button
-            onClick={handleGoogleClick}
-            type="button"
-            className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95"
-        >
-            <TfiGoogle />
-            Continue with Google
-        </button>
+        <div className="flex justify-center">
+    <button
+        onClick={handleGoogleClick}
+        type="button"
+        className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-3 rounded-lg uppercase hover:opacity-95 flex items-center gap-2"
+    >
+        <AiOutlineGoogle />
+        Continue with Google
+    </button>
+</div>
+
     );
 };
 

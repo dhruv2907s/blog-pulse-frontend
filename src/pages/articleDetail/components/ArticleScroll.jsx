@@ -12,7 +12,7 @@ import ArticleCard from '/Users/avirajsingh/Desktop/SEM5/CITL/final proj/blog-ma
 import ArticleCardSkeleton from '/Users/avirajsingh/Desktop/SEM5/CITL/final proj/blog-management-frontend/src/components/ArticleCardSkeleton.jsx';
 import ErrorMessage from '/Users/avirajsingh/Desktop/SEM5/CITL/final proj/blog-management-frontend/src/components/ErrorMessage.jsx';
 import { getAllPosts } from "/Users/avirajsingh/Desktop/SEM5/CITL/final proj/blog-management-frontend/src/services/index/posts.js";
-
+import {ManagePosts} from "../../admin/screens/posts/ManagePost"
 
 const Header = () => {
   const location = useLocation();
@@ -77,7 +77,7 @@ const Header = () => {
                   </div>
                 )}
                 <span>{user.name}</span>
-                <FaChevronDown className={transform ${isDropdownOpen ? 'rotate-180' : ''} transition-transform} />
+                <FaChevronDown className={`transform ${isDropdownOpen ? 'rotate-180' : ''} transition-transform`} />
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-background rounded-md shadow-lg py-1 z-10">
