@@ -8,10 +8,10 @@ import { FaSearch, FaUserCircle, FaChevronDown } from 'react-icons/fa';
 import { HiOutlineCamera } from 'react-icons/hi';
 import { useSelector } from "react-redux";
 import { images } from "../../../constants";
-import ArticleCard from '/Users/avirajsingh/Desktop/SEM5/CITL/final proj/blog-management-frontend/src/components/ArticleCard.jsx';
-import ArticleCardSkeleton from '/Users/avirajsingh/Desktop/SEM5/CITL/final proj/blog-management-frontend/src/components/ArticleCardSkeleton.jsx';
-import ErrorMessage from '/Users/avirajsingh/Desktop/SEM5/CITL/final proj/blog-management-frontend/src/components/ErrorMessage.jsx';
-import { getAllPosts } from "/Users/avirajsingh/Desktop/SEM5/CITL/final proj/blog-management-frontend/src/services/index/posts.js";
+import ArticleCard from '../../../components/ArticleCard';
+import ArticleCardSkeleton from '../../../components/ArticleCardSkeleton';
+import ErrorMessage from '../../../components/ErrorMessage';
+import { getAllPosts } from "../../../services/index/posts";
 import {ManagePosts} from "../../admin/screens/posts/ManagePost"
 
 const Header = () => {
