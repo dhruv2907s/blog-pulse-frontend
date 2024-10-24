@@ -7,7 +7,6 @@ import { signup } from "../../services/index/users";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/reducers/userReducer";
-import OAuth from "../../components/OAuth";
 
 const RegisterPage = () => {
     const navigate = useNavigate();
@@ -127,7 +126,7 @@ const RegisterPage = () => {
                             {isLoading ? "Registering..." : "Create Account"}
                         </button>
                     </form>
-                    <OAuth />
+                    
                     <p className="text-sm text-center text-gray-500 mt-6">
                         Already have an account?{" "}
                         <Link to="/login" className="text-indigo-600 font-semibold">Log In</Link>

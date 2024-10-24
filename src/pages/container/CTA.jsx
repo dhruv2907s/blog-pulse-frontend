@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { images } from "../../constants";
 
 const CTA = () => {
+    const [isSubscribed, setIsSubscribed] = useState(false);
+
+    const handleSubscribe = () => {
+        setIsSubscribed(true);
+        // Automatically hide the toast after 3 seconds
+        setTimeout(() => {
+            setIsSubscribed(false);
+        }, 3000);
+    };
+
     return (
         <section className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 py-20 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
@@ -17,7 +27,10 @@ const CTA = () => {
                                 className="w-full px-5 py-3 placeholder-gray-300 border border-transparent rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white"
                             />
                             <div className="mt-3 sm:mt-0 sm:ml-3">
-                                <button className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-r-md text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white">
+                                <button
+                                    onClick={handleSubscribe}
+                                    className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-r-md text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white"
+                                >
                                     Get Started
                                 </button>
                             </div>
@@ -35,17 +48,19 @@ const CTA = () => {
                                     alt="Future of Work"
                                     className="w-full h-48 sm:h-56 object-cover"
                                 />
-                                <div className="p-6">
-                                    <h3 className="text-xl font-semibold text-gray-900">Future of Work</h3>
-                                    <p className="mt-2 text-gray-600">
-                                        Majority of people will work in jobs that don't exist today.
-                                    </p>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            {/* Toast Notification */}
+            {isSubscribed && (
+                <div className="fixed bottom-5 right-5 bg-green-500 text-white p-4 rounded shadow-lg transition-opacity duration-300 ease-in-out">
+                    Subscribed Successfully
+                </div>
+            )}
         </section>
     );
 };

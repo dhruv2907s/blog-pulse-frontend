@@ -24,13 +24,13 @@ const Footer = () => {
                         <a href="/" className="hover:text-white transition-colors duration-300 py-2">Pricing</a>
                     </div>
                     <div className="flex space-x-6 mt-8 md:mt-0">
-                        <a href="/" className="hover:text-white transition-colors duration-300">
+                        <a href="https://x.com/home" className="hover:text-white transition-colors duration-300">
                             <AiOutlineTwitter className="w-6 h-6" />
                         </a>
-                        <a href="/" className="hover:text-white transition-colors duration-300">
+                        <a href="https://www.instagram.com" className="hover:text-white transition-colors duration-300">
                             <AiFillInstagram className="w-6 h-6" />
                         </a>
-                        <a href="/" className="hover:text-white transition-colors duration-300">
+                        <a href="https://www.facebook.com" className="hover:text-white transition-colors duration-300">
                             <FaFacebook className="w-6 h-6" />
                         </a>
                     </div>

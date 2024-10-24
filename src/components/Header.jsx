@@ -3,17 +3,31 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-
+import { HiOutlineCamera } from "react-icons/hi";
 import { LogOut, User } from "lucide-react";
 import { images } from "../constants";
+import { stables } from "../constants";
 import { logout } from "../store/actions/user";
-import { getUserProfile } from "../services/index/users"; // Import API for fetching profile data
-import ProfilePicture from "./ProfilePicture";
+import { getUserProfile } from "../services/index/users";
 
 const navItemsInfo = [
   { name: "Home", href: "/" },
-  { name: "Articles", href: "/articles" },
+  { name: "Articles", href: "/feed" },
 ];
+
+const ProfilePictureComponent = ({ avatar, className = "" }) => {
+  return avatar ? (
+    <img
+      src={stables.UPLOAD_FOLDER_BASE_URL + avatar}
+      alt="profile"
+      className={`w-full h-full object-cover ${className}`}
+    />
+  ) : (
+    <div className="w-full h-full bg-blue-50/50 flex justify-center items-center">
+      <HiOutlineCamera className="w-7 h-auto text-primary" />
+    </div>
+  );
+};
 
 export default function Header() {
   const navigate = useNavigate();
@@ -22,13 +36,12 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const userState = useSelector((state) => state.user);
 
-  // Fetch profile data using react-query
   const { data: profileData, isLoading: profileIsLoading } = useQuery({
     queryFn: () => {
       return getUserProfile({ token: userState.userInfo.token });
     },
-    queryKey: ["profileHeader"], // Unique query key for the header
-    enabled: !!userState.userInfo, // Only run the query if userInfo exists
+    queryKey: ["profileHeader"],
+    enabled: !!userState.userInfo,
   });
 
   useEffect(() => {
@@ -77,18 +90,18 @@ export default function Header() {
             {userState.userInfo ? (
               <div className="relative group">
                 <button className="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-colors">
-                <div className="w-10 h-10 rounded-full overflow-hidden">
-  {profileIsLoading ? (
-    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-300">
-      <User className="w-9 h-9 flex flex-col text-gray-400" />
-    </div>
-  ) : (
-    <ProfilePicture 
-      avatar={profileData?.avatar}
-      className="w-full h-full" 
-    />
-  )}
-</div>
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                    {profileIsLoading ? (
+                      <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-300">
+                        <User className="w-9 h-9 flex flex-col text-gray-400" />
+                      </div>
+                    ) : (
+                      <ProfilePictureComponent 
+                        avatar={profileData?.avatar}
+                        className="w-full h-full" 
+                      />
+                    )}
+                  </div>
                   <span className="font-semibold">{userState.userInfo.name}</span>
                 </button>
                 <div className="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
