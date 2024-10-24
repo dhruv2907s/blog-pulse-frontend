@@ -41,7 +41,7 @@ const Header = () => {
             <div className="container mx-auto px-4 py-4">
                 <div className="flex justify-between items-center">
                     <Link to="/" className="flex items-center">
-                        <img className="h-10" src={images.Logo} alt="logo" />
+                        <img className="h-10" src={images.blog_pulse_logo_black} alt="logo" />
                     </Link>
                     <nav className="hidden md:flex space-x-8">
                         {navItemsInfo.map((item) => (
