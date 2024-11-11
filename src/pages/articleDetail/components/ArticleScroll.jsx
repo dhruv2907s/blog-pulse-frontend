@@ -4,7 +4,7 @@ import { stables } from "../../../constants";
 import { toast } from "react-hot-toast";
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaSearch, FaUserCircle, FaChevronDown } from 'react-icons/fa';
+import { FaSearch, FaChevronDown } from 'react-icons/fa';
 import { HiOutlineCamera } from 'react-icons/hi';
 import { useSelector } from "react-redux";
 import { images } from "../../../constants";
@@ -12,7 +12,6 @@ import ArticleCard from '../../../components/ArticleCard';
 import ArticleCardSkeleton from '../../../components/ArticleCardSkeleton';
 import ErrorMessage from '../../../components/ErrorMessage';
 import { getAllPosts } from "../../../services/index/posts";
-import {ManagePosts} from "../../admin/screens/posts/ManagePost"
 
 const Header = () => {
   const location = useLocation();
